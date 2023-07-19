@@ -1,0 +1,10 @@
+<%= render 'shared/profile', user: @user %>
+<div>
+  <p><%= @book.title %></p>
+  <p><%= @book.body %></p>
+</div>
+
+<% if @user == current_user %>
+  <%= link_to "投稿編集", edit_book_path(@book.id) %>
+  <%= link_to "削除", book_path(@book.id), method: :delete %>
+<% end %>
