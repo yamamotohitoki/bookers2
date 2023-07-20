@@ -1,6 +1,16 @@
+
+  <% if @book.errors.any? %>
+    <%= @book.errors.count %>errors prohibited this obj from being saved:
+    <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
 <div class="container">
  <div class="row">
-   <%= render 'shared/profile', user: @user %>
+   <%= render 'shared/profile', user: @user, book: @book %>
    <div class="col-md-8 offset-md-1">
    <h2>Books</h2>
    <table class="table table-hover table-inverse">
@@ -14,21 +24,15 @@
      </thead>
      </tbody>
        <tr>
-         <td><% @books.each do |book| %>
-         <% if @user.image.attached? %>
-           <%= link_to user_path(@user.id) do %>
-           <%= image_tag @user.image, size: "width, height" %>
+         <% @books.each do |book| %>
+           <td><%= link_to user_path(book.user.id) do %>
+           <%= image_tag book.user.get_profile_image(100,100) %></td>
          <% end %>
-         <% else %>
-           <%= link_to user_path(@user.id) do %>
-           <%= image_tag 'no_image', size: "width, height" %>
-         <% end %>
-         <% end %></td>
          <td><%= link_to book.title, book_path(book.id) %></td>
          <td><%= book.body %></td>
-       <% end %>
-      </tr>
+       </tr>
      </tbody>
+       <% end %>
    </table>
    </div>
   </div>
